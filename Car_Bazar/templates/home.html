@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+
+    <div class="flex-wrap d-flex align-items-center">
+        <div class="col-6 px-3">
+            <h1>Welcome, to <b> Car Bazar</b></h1>
+            <p>
+                Let visit our website and chose your dream Car from here.
+                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. 
+            </p>
+        </div>
+        <div class="col-6 p-2">
+            <img class="px-3" style="width:100%;" src="{% static 'Home2.webp' %}" alt="Image">
+        </div>
+    </div>
+
+    <div class="m-3" style="background-color:#efcb3b;">
+        <div class="container align-items-center">
+            <div class="row mt-5">
+                <div class="col pt-3">
+                    <a href="{% url 'home' %}" class="btn btn-outline-primary btn-block mb-3">All</a>
+                </div>
+                {% for brand in brands %}
+                <div class="col pt-3">
+                    <a href="{% url 'brand_wise' brand.slug %}" class="btn btn-outline-primary btn-block mb-3">{{ brand.name }}</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="mx-3" style="background-color:#4ecc45;"> <h1>Total Car Found : {{datas | length }}</h1> </div>
+
+    <div class="flex-wrap d-flex p-2">
+        {% for data in datas %}
+
+        <div class="card m-2" style="width: 18rem;">
+            <img src="{{data.car_image.url}}" class="card-img-top" alt="Image">
+            <div class="card-body text-center">
+              <h4 class="card-title">{{data.car_name}} </h4>
+              <h5>${{data.car_price}}</h5>
+              <h6>{{data.car_brand}} </h6>
+              <a href="{% url 'car_detail' pk=data.pk %}" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        
+        {% endfor %}
+    </div>
+
+{% endblock content %}
+
